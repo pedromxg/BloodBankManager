@@ -8,16 +8,16 @@ namespace BloodBankManager.Core.Entities
 {
     public class Donation
     {
-        public Donation(int iD, int donorId, DateTime donatinoDate, int amountDonated, Donor donor)
+        public Donation(int id, int donorId, DateTime donatinoDate, int amountDonated, Donor donor)
         {
-            ID = iD;
+            Id = id;
             DonorId = donorId;
             DonatinoDate = donatinoDate;
             AmountDonated = amountDonated;
             Donor = donor;
         }
 
-        public int ID { get; private set; }
+        public int Id { get; private set; }
         public int DonorId { get; private set; }
         public DateTime DonatinoDate { get; private set; }
         public int AmountDonated { get; private set; }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BloodBankManager.Application.InputModels
+namespace BloodBankManager.Application.Models.ViewModels
 {
-    public class NewDonorInputModel
+    public class DonationViewModel
     {
     }
 }

@@ -8,15 +8,15 @@ namespace BloodBankManager.Core.Entities
 {
     public class BloodStock
     {
-        public BloodStock(int iD, string bloodType, string rhFactor, int mlAmount)
+        public BloodStock(int id, string bloodType, string rhFactor, int mlAmount)
         {
-            ID = iD;
+            Id = id;
             BloodType = bloodType;
             RhFactor = rhFactor;
             MlAmount = mlAmount;
         }
 
-        public int ID { get; private set; }
+        public int Id { get; private set; }
         public string BloodType { get; private set; }
         public string RhFactor { get; private set; }
         public int MlAmount { get; private set; }

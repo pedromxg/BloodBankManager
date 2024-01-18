@@ -1,4 +1,4 @@
-﻿using BloodBankManager.API.Models.InputModels;
+﻿using BloodBankManager.Application.InputModels;
 using BloodBankManager.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +23,10 @@ namespace BloodBankManager.API.Controllers
         }
 
         [HttpGet("id")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var donor = await _donorService.GetById(id);
+
             return Ok(donor);
         }
 
@@ -43,9 +44,11 @@ namespace BloodBankManager.API.Controllers
         }
 
         [HttpPut("id")]
-        public IActionResult Update(int id, [FromBody] UpdateDonorInputModel donor)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateDonorInputModel donor)
         {
-            if (donor == null)
+            await _donorService.Update(id, donor);
+
+            if (id == null)
             {
                 return BadRequest();
             }
@@ -54,8 +57,10 @@ namespace BloodBankManager.API.Controllers
         }
 
         [HttpDelete("id")]
-        public IActionResult Remove(int id)
+        public async Task<IActionResult> Remove(int id)
         {
+            await _donorService.Remove(id);
+
             if (id == null)
             {
                 return NotFound();

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BloodBankManager.Core\BloodBankManager.Core.csproj" />
+    <ProjectReference Include="..\BloodBankManager.Infrastructure\BloodBankManager.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

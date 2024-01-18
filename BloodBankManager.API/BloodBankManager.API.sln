@@ -4,12 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBankManager.API", "BloodBankManager.API\BloodBankManager.API.csproj", "{3A2B1BDC-0FC2-4CBA-A744-993E7AE8AB68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9394F37A-11F6-4270-89DB-C61E58941712} = {9394F37A-11F6-4270-89DB-C61E58941712}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBankManager.Application", "BloodBankManager.Application\BloodBankManager.Application.csproj", "{F87058BA-666D-4792-861D-FB24D29D651F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBankManager.Application", "BloodBankManager.Application\BloodBankManager.Application.csproj", "{F87058BA-666D-4792-861D-FB24D29D651F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9394F37A-11F6-4270-89DB-C61E58941712} = {9394F37A-11F6-4270-89DB-C61E58941712}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBankManager.Core", "BloodBankManager.Core\BloodBankManager.Core.csproj", "{C694CDA8-67FD-4400-9D83-25A87866EA73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBankManager.Core", "BloodBankManager.Core\BloodBankManager.Core.csproj", "{C694CDA8-67FD-4400-9D83-25A87866EA73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloodBankManager.Infrastructure", "BloodBankManager.Infrastructure\BloodBankManager.Infrastructure.csproj", "{9394F37A-11F6-4270-89DB-C61E58941712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloodBankManager.Infrastructure", "BloodBankManager.Infrastructure\BloodBankManager.Infrastructure.csproj", "{9394F37A-11F6-4270-89DB-C61E58941712}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
