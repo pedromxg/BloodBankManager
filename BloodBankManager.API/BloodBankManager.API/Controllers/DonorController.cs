@@ -35,29 +35,30 @@ namespace BloodBankManager.API.Controllers
         {
             var newDonor = await _donorService.Create(newDonorInputModel);
 
-            if (newDonor == null)
+            if (!newDonor.Item1)
             {
                 return BadRequest();
             }
 
-            return CreatedAtAction(nameof(GetById), new {id = newDonor.Id}, newDonor);
+            return CreatedAtAction(nameof(GetById), new {id = newDonor.Item2.Id}, newDonor);
         }
 
         [HttpPut("id")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateDonorInputModel donor)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDonorInputModel donor)
         {
-            await _donorService.Update(id, donor);
-
             if (id == null)
-            {
                 return BadRequest();
-            }
+
+            var updatedSuccessfully = await _donorService.Update(id, donor);
+            
+            if (!updatedSuccessfully)
+                return BadRequest();
 
             return NoContent();
         }
 
         [HttpDelete("id")]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(Guid id)
         {
             await _donorService.Remove(id);
 

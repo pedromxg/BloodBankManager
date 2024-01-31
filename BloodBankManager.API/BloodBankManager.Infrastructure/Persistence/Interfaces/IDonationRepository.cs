@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BloodBankManager.Application.Models.ViewModels
+namespace BloodBankManager.Infrastructure.Persistence.Interfaces
 {
-    public class CreatedDonationViewModel
+    public interface IDonationRepository
     {
-        public Guid Id { get; set; }
     }
 }

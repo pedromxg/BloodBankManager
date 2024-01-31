@@ -12,10 +12,10 @@ namespace BloodBankManager.Infrastructure.Persistence.Interfaces
     public interface IDonorRepository
     {
         Task<Donor> Create(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor,
-            Adress adress);
-
+            Address address);
         Task<List<Donor>> GetAll();
-
         Task<Donor> GetById(Guid id);
+        Task Update(Donor updatedDonor);
+        Task Remove(Donor donor);
     }
 }

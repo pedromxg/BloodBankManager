@@ -2,15 +2,18 @@
 using BloodBankManager.Application.Models.ViewModels;
 using BloodBankManager.Application.Services.Interfaces;
 using BloodBankManager.Application.ViewModels;
-using BloodBankManager.Core.Entities;
 using BloodBankManager.Infrastructure.Persistence.Interfaces;
-using BloodBankManager.Infrastructure.Persistence.Repositories;
 
 namespace BloodBankManager.Application.Services.Implementations
 {
     public class DonorService : IDonorService
     {
         private readonly IDonorRepository _donorRepository;
+
+        public DonorService(IDonorRepository donorRepository)
+        {
+            _donorRepository = donorRepository;
+        }
 
         public async Task<List<DonorViewModel>> GetAll()
         {
@@ -35,12 +38,24 @@ namespace BloodBankManager.Application.Services.Implementations
         {
             var donor = await _donorRepository.GetById(id);
 
+            if (donor == null)
+            {
+                return new DonorDetailsViewModel();
+            }
+
             return new DonorDetailsViewModel(donor.Name, donor.Email, donor.DateOfBirth, donor.Gender, donor.Weight, donor.BloodType,
-                donor.RhFactor, donor.Adress);
+                donor.RhFactor, donor.Address);
         }
 
-        public async Task<CreatedDonorViewModel> Create(NewDonorInputModel newDonorInputModel)
+        public async Task<(bool, CreatedDonorViewModel?)> Create(NewDonorInputModel newDonorInputModel)
         {
+            var registeredDonors = _donorRepository.GetAll().Result;
+
+            var canCreateDonor = !registeredDonors.Exists(r => r.Email.Equals(newDonorInputModel.Email));
+
+            if (!canCreateDonor)
+                return (canCreateDonor, null);
+
             var createdDonor = await _donorRepository.Create(newDonorInputModel.Name,
                 newDonorInputModel.Email,
                 newDonorInputModel.DateOfBirth,
@@ -48,19 +63,30 @@ namespace BloodBankManager.Application.Services.Implementations
                 newDonorInputModel.Weight,
                 newDonorInputModel.BloodType,
                 newDonorInputModel.RhFactor,
-                newDonorInputModel.Adress);
+                newDonorInputModel.Address);
 
-            return new CreatedDonorViewModel(createdDonor.Id);
+            return (canCreateDonor, new CreatedDonorViewModel(createdDonor.Id));
         }
 
-        public async Task Update(int id, UpdateDonorInputModel updateDonorInputModel)
+        public async Task<bool> Update(Guid id, UpdateDonorInputModel updateDonorInputModel)
         {
-            throw new NotImplementedException();
+            var donor = _donorRepository.GetById(id).Result;
+
+            if (donor == null)
+                return false;
+
+            donor.UpdateAddress(updateDonorInputModel.Adress);
+
+            await _donorRepository.Update(donor);
+
+            return true;
         }
 
-        public async Task Remove(int id)
+        public async Task Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var donor = await _donorRepository.GetById(id);
+
+            await _donorRepository.Remove(donor);
         }        
     }
 }

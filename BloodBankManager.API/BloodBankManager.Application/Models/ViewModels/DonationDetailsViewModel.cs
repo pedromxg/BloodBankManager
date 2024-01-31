@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace BloodBankManager.Application.Models.ViewModels
 {
-    public class CreatedDonorViewModel
+    public class DonationDetailsViewModel
     {
-        public CreatedDonorViewModel(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; set; }
     }
 }

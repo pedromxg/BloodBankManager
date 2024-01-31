@@ -10,7 +10,10 @@ namespace BloodBankManager.Application.ViewModels
 {
     public class DonorDetailsViewModel
     {
-        public DonorDetailsViewModel(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor, Adress adress)
+        public DonorDetailsViewModel()
+        {
+        }
+        public DonorDetailsViewModel(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor, Address adress)
         {
             Name = name;
             Email = email;
@@ -29,6 +32,6 @@ namespace BloodBankManager.Application.ViewModels
         public double Weight { get; private set; }
         public BloodTypes BloodType { get; private set; }
         public string RhFactor { get; private set; }
-        public Adress Adress { get; private set; }
+        public Address Adress { get; private set; }
     }
 }

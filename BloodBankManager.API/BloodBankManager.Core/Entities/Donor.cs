@@ -11,7 +11,7 @@ namespace BloodBankManager.Core.Entities
     public class Donor
     {
         public Donor(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor, 
-            Adress adress)
+            Address adress)
         {
             Name = name;
             Email = email;
@@ -20,7 +20,7 @@ namespace BloodBankManager.Core.Entities
             Weight = weight;
             BloodType = bloodType;
             RhFactor = rhFactor;
-            Adress = adress;
+            Address = adress;
         }
 
         public Guid Id { get; private set; }
@@ -32,6 +32,11 @@ namespace BloodBankManager.Core.Entities
         public BloodTypes BloodType { get; private set; }
         public string RhFactor { get; private set; }
         public List<Donation> Donations { get; private set; }
-        public Adress Adress { get; private set; }
+        public Address Address { get; private set; }
+
+        public void UpdateAddress(Address newAddress)
+        {
+            Address = newAddress;
+        }
     }
 }

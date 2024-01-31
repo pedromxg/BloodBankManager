@@ -8,8 +8,8 @@ namespace BloodBankManager.Application.Services.Interfaces
     {
         Task<List<DonorViewModel>> GetAll();
         Task<DonorDetailsViewModel> GetById(Guid id);
-        Task<CreatedDonorViewModel> Create(NewDonorInputModel newDonorInputModel);
-        Task Update(int id, UpdateDonorInputModel updateDonorInputModel);
-        Task Remove(int id);
+        Task<(bool, CreatedDonorViewModel?)> Create(NewDonorInputModel newDonorInputModel);
+        Task<bool> Update(Guid id, UpdateDonorInputModel updateDonorInputModel);
+        Task Remove(Guid id);
     }
 }

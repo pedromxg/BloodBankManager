@@ -20,11 +20,12 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
         }
 
         public async Task<Donor> Create(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor,
-            Adress adress)
+            Address adress)
         {
             var donor = new Donor(name, email, dateOfBirth, gender, weight, bloodType, rhFactor, adress);
 
-            _dbContext.Donors.Add(donor);
+            await _dbContext.Donors.AddAsync(donor);
+            await _dbContext.SaveChangesAsync();
 
             return donor;
         }
@@ -38,7 +39,19 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
 
         public async Task<Donor> GetById(Guid id)
         {
-            return _dbContext.Donors.FirstOrDefault(d => d.Id == id);
+            return await _dbContext.Donors.FirstOrDefaultAsync(d => d.Id == id);
+        }
+
+        public async Task Update(Donor updatedDonor)
+        {
+            _dbContext.Donors.UpdateRange(updatedDonor);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Remove(Donor donor)
+        {
+            _dbContext.Donors.Remove(donor);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BloodBankManager.Application.Models.ViewModels
+namespace BloodBankManager.Application.Models.InputModels
 {
-    public class CreatedDonationViewModel
+    public class NewDonationInputModel
     {
-        public Guid Id { get; set; }
     }
 }
