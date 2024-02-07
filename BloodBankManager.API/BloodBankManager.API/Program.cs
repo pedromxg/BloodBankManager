@@ -1,11 +1,8 @@
-using BloodBankManager.API.Controllers;
-using BloodBankManager.Application.Services.Implementations;
-using BloodBankManager.Application.Services.Interfaces;
-using BloodBankManager.Core.Entities;
 using BloodBankManager.Infrastructure.Persistence;
-using BloodBankManager.Infrastructure.Persistence.Interfaces;
-using BloodBankManager.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using BloodBankManager.Application.DependencyInjection;
+using BloodBankManager.Infrastructure.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IDonorService, DonorService>();
-builder.Services.AddScoped<IDonationService, DonationService>();
-builder.Services.AddScoped<IDonorRepository, DonorRepository>();
-builder.Services.AddScoped<IDonationRepository, DonationRepository>();
+builder.Services.AddServiceDependencyInjection();
+builder.Services.AddRepositoryDependencyInjection();
 
 var connectionString = builder.Configuration.GetConnectionString("BloodBankManager");
 builder.Services.AddDbContext<BloodBankDbContext>(options => options.UseInMemoryDatabase(connectionString));

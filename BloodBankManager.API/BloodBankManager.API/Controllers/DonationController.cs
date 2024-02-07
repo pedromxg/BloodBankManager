@@ -34,14 +34,14 @@ namespace BloodBankManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] NewDonationInputModel newDonationInputModel)
         {
-            var newDonor = await _donationService.Create(newDonationInputModel);
+            var newDonation = await _donationService.Create(newDonationInputModel);
 
-            if (!newDonor.Item1)
+            if (!newDonation.Item1)
             {
                 return BadRequest();
             }
 
-            return CreatedAtAction(nameof(GetById), new { id = newDonor.Item2.Id }, newDonor);
+            return CreatedAtAction(nameof(GetById), new { id = newDonation.Item2.Id }, newDonation);
         }
 
         [HttpDelete("id")]

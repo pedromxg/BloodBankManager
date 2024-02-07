@@ -32,9 +32,7 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
 
         public async Task<List<Donor>> GetAll()
         {
-            var donors = _dbContext.Donors.ToListAsync();
-
-            return await donors;
+            return await _dbContext.Donors.ToListAsync();
         }
 
         public async Task<Donor> GetById(Guid id)
