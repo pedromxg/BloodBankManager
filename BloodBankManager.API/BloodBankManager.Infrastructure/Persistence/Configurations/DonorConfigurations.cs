@@ -13,11 +13,30 @@ namespace BloodBankManager.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Donor> builder)
         {
-            builder.HasKey(d => d.Id);
+            builder
+                .HasKey(d => d.Id);
 
-            builder.HasMany(d => d.Donations)
+            builder
+                .HasMany(d => d.Donations)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .OwnsOne(d => d.Address)
+                .Property(d => d.State);
+            
+            builder
+                .OwnsOne(d => d.Address)
+                .Property(d => d.City);
+            
+            builder
+                .OwnsOne(d => d.Address)
+                .Property(d => d.Street);
+            
+            builder
+                .OwnsOne(d => d.Address)
+                .Property(d => d.Cep);
+                
         }
     }
 }

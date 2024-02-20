@@ -8,9 +8,11 @@ namespace BloodBankManager.Core.Entities
 {
     public class Donation
     {
-        public Donation(DateTime donatinoDate, double amountDonated, Donor donor)
+        public Donation() { }
+
+        public Donation(DateTime donationDate, double amountDonated, Donor donor)
         {
-            DonationDate = donatinoDate;
+            DonationDate = donationDate;
             AmountDonated = amountDonated;
             Donor = donor;
         }

@@ -21,9 +21,6 @@ namespace BloodBankManager.Application.Services.Implementations
 
             var donorsViewModelList = new List<DonorViewModel>();
 
-            if (donors == null)
-                return donorsViewModelList;
-
             foreach (var donor in donors)
             {
                 var donorViewModel = new DonorViewModel(donor.Name, donor.BloodType, donor.RhFactor);

@@ -10,8 +10,10 @@ namespace BloodBankManager.Core.Entities
 {
     public class Donor
     {
+        public Donor() { }
+
         public Donor(string name, string email, DateTime dateOfBirth, string gender, double weight, BloodTypes bloodType, string rhFactor, 
-            Address adress)
+            Address address)
         {
             Name = name;
             Email = email;
@@ -20,7 +22,7 @@ namespace BloodBankManager.Core.Entities
             Weight = weight;
             BloodType = bloodType;
             RhFactor = rhFactor;
-            Address = adress;
+            Address = new Address(address.Street, address.City, address.State, address.Cep);
         }
 
         public Guid Id { get; private set; }

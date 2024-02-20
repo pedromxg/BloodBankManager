@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,17 +10,14 @@ namespace BloodBankManager.Core.Entities.ValueObjects
 {
     public class Address
     {
-        public Address(string street, string city, string state, string cep)
-        {
-            Street = street;
-            City = city;
-            State = state;
-            Cep = cep;
-        }
+        public Address(string street,
+        string city,
+        string state,
+        string cep) => (Street, City, State, Cep) = (street, city, state, cep);
 
-        public string Street { get; private set; }
-        public string City { get; private set; }
-        public string State { get; private set; }
-        public string Cep { get; private set; }
+        public string Street { get;  }
+        public string City { get; }
+        public string State { get; }
+        public string Cep { get; }
     }
 }
