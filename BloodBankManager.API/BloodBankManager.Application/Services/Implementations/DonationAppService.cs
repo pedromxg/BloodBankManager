@@ -1,27 +1,33 @@
-﻿using BloodBankManager.Application.InputModels;
-using BloodBankManager.Application.Models.InputModels;
+﻿using BloodBankManager.Application.Models.InputModels;
 using BloodBankManager.Application.Models.ViewModels;
 using BloodBankManager.Application.Services.Interfaces;
+using BloodBankManager.Core.Services.Interfaces;
 using BloodBankManager.Infrastructure.Persistence.Interfaces;
-using BloodBankManager.Infrastructure.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BloodBankManager.Application.Services.Implementations
 {
-    public class DonationService : IDonationService
+    public class DonationAppService : IDonationAppService
     {
         private readonly IDonationRepository _donationRepository;
         private readonly IDonorRepository _donorRepository;
+        private readonly IBloodStockRepository _bloodStockRepository;
+        private readonly IDonationService _donationService;
+
+        public DonationAppService(IDonationRepository donationRepository, IDonorRepository donorRepository, IDonationService donationService)
+        {
+            _donationRepository = donationRepository;
+            _donorRepository = donorRepository;
+            _donationService = donationService;
+        }
 
         public async Task<(bool, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel)
         {
-            var registeredDonations = _donationRepository.GetAll().Result;
-
             var donor = await _donorRepository.GetById(newDonationInputModel.DonorId);
+            var registeredDonations = await _donationRepository.GetAll();
+            var bloodStock = await _bloodStockRepository
+            
+
+            _donationService.NewDonation(donor, registeredDonations, );
 
             var canDonate = !registeredDonations.Exists(r => r.DonationDate.Equals(newDonationInputModel.DonationDate) && r.DonorId.Equals(newDonationInputModel.DonorId));
 
@@ -33,9 +39,11 @@ namespace BloodBankManager.Application.Services.Implementations
             return (canDonate, new CreatedDonationViewModel(createdDonation.Id));
         }
 
-        public async Task<List<DonationViewModel>> GetAll()
+        public async Task<List<DonationViewModel>> GetAllInTheLastThirtyDays()
         {
-            var donations = await _donationRepository.GetAll();
+            var referenceDate = DateTime.Now.AddDays(-30);
+
+            var donations = await _donationRepository.GetAllFromReferenceDate(referenceDate);
 
             var donationsViewModelList = new List<DonationViewModel>();
 
@@ -44,9 +52,10 @@ namespace BloodBankManager.Application.Services.Implementations
 
             foreach (var donation in donations)
             {
-                var donorViewModel = new DonationViewModel();
+                var donationViewModel = new DonationViewModel(donation.DonorId, donation.AmountDonated, donation.Donor.BloodType, 
+                    donation.DonationDate);
 
-                donationsViewModelList.Add(donorViewModel);
+                donationsViewModelList.Add(donationViewModel);
             }
 
             return donationsViewModelList;

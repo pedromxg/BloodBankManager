@@ -17,6 +17,12 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
     public class DonationRepository : IDonationRepository
     {
         private readonly BloodBankDbContext _dbContext;
+
+        public DonationRepository(BloodBankDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public async Task<Donation> Create(DateTime donationDate, double amountDonated, Donor donor)
         {
             var donation = new Donation(donationDate, amountDonated, donor);
@@ -31,6 +37,15 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
         public async Task<List<Donation>> GetAll()
         {
             return await _dbContext.Donations.ToListAsync();
+        }
+
+        public async Task<List<Donation>> GetAllFromReferenceDate(DateTime referenceDate)
+        {
+            var donations = await _dbContext.Donations
+                .Where(d => d.DonationDate >= referenceDate)
+                .ToListAsync();
+
+            return donations;
         }
 
         public async Task<Donation> GetById(Guid id)

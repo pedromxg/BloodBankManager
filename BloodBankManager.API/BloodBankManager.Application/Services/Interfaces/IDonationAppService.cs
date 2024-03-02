@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BloodBankManager.Application.Services.Interfaces
 {
-    public interface IDonationService
+    public interface IDonationAppService
     {
-        Task<List<DonationViewModel>> GetAll();
+        Task<List<DonationViewModel>> GetAllInTheLastThirtyDays();
         Task<DonationDetailsViewModel> GetById(Guid id);
         Task<(bool, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel);
         Task Remove(Guid id);

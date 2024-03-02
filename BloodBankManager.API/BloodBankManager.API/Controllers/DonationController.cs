@@ -1,5 +1,4 @@
-﻿using BloodBankManager.Application.InputModels;
-using BloodBankManager.Application.Models.InputModels;
+﻿using BloodBankManager.Application.Models.InputModels;
 using BloodBankManager.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,40 +7,40 @@ namespace BloodBankManager.API.Controllers
     [Route("api/donations")]
     public class DonationController : ControllerBase
     {
-        private readonly IDonationService _donationService;
+        private readonly IDonationAppService _donationService;
 
-        public DonationController(IDonationService donationService)
+        public DonationController(IDonationAppService donationService)
         {
             _donationService = donationService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetReportOfTheLastThirtyDays()
         {
-            var donors = await _donationService.GetAll();
+            var donations = await _donationService.GetAllInTheLastThirtyDays();
 
-            return Ok(donors);
+            return Ok(donations);
         }
 
         [HttpGet("id")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var donor = await _donationService.GetById(id);
+            var donation = await _donationService.GetById(id);
 
-            return Ok(donor);
+            return Ok(donation);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] NewDonationInputModel newDonationInputModel)
         {
-            var newDonation = await _donationService.Create(newDonationInputModel);
+            var (canDonate, newDonation) = await _donationService.Create(newDonationInputModel);
 
-            if (!newDonation.Item1)
+            if (!canDonate)
             {
                 return BadRequest();
             }
 
-            return CreatedAtAction(nameof(GetById), new { id = newDonation.Item2.Id }, newDonation);
+            return CreatedAtAction(nameof(GetById), new { id = newDonation.Id }, newDonation);
         }
 
         [HttpDelete("id")]
