@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BloodBankManager.Core.Entities;
+using BloodBankManager.Core.Enums;
 
 namespace BloodBankManager.Infrastructure.Persistence.Interfaces
 {
     public interface IBloodStockRepository
     {
+        Task<BloodStock> GetByType(BloodTypes bloodType);
+        Task CreateAsync(BloodStock newBloodStock);
+        Task UpdateAsync(BloodStock updatedBloodStock);
     }
 }

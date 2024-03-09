@@ -15,6 +15,7 @@ namespace BloodBankManager.Infrastructure.DependencyInjection
         {
             services.AddScoped<IDonorRepository, DonorRepository>();
             services.AddScoped<IDonationRepository, DonationRepository>();
+            services.AddScoped<IBloodStockRepository, BloodStockRepository>();
         }
     }
 }

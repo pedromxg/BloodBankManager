@@ -9,7 +9,7 @@ namespace BloodBankManager.Infrastructure.Persistence.Interfaces
 {
     public interface IDonationRepository
     {
-        Task<Donation> Create(DateTime donationDate, double amountDonated, Donor donor);
+        Task<Donation> CreateAsync(Donation donation);
         Task<List<Donation>> GetAll();
         Task<List<Donation>> GetAllFromReferenceDate(DateTime referenceDate);
         Task<Donation> GetById(Guid id);

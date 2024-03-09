@@ -23,10 +23,8 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Donation> Create(DateTime donationDate, double amountDonated, Donor donor)
+        public async Task<Donation> CreateAsync(Donation donation)
         {
-            var donation = new Donation(donationDate, amountDonated, donor);
-
             await _dbContext.Donations.AddAsync(donation);
 
             await _dbContext.SaveChangesAsync();
@@ -56,6 +54,13 @@ namespace BloodBankManager.Infrastructure.Persistence.Repositories
         public async Task Remove(Donation donation)
         {
             _dbContext.Donations.Remove(donation);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task SaveAsync(Donation donation)
+        {
+            await _dbContext.Donations.AddAsync(donation);
 
             await _dbContext.SaveChangesAsync();
         }

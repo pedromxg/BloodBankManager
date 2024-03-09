@@ -10,6 +10,8 @@ namespace BloodBankManager.Application.Models.ViewModels
     {
         public Guid Id { get; set; }
 
+        public CreatedDonationViewModel() { }
+
         public CreatedDonationViewModel(Guid id)
         {
             Id = id;

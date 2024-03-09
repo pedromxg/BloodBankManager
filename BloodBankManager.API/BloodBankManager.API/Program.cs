@@ -2,7 +2,8 @@ using BloodBankManager.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using BloodBankManager.Application.DependencyInjection;
 using BloodBankManager.Infrastructure.DependencyInjection;
-
+using BloodBankManager.Core.Services.Interfaces;
+using BloodBankManager.Core.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddServiceDependencyInjection();
 builder.Services.AddRepositoryDependencyInjection();
+builder.Services.AddScoped<IDonationService, DonationService>();
 
 var connectionString = builder.Configuration.GetConnectionString("BloodBankManager");
 builder.Services.AddDbContext<BloodBankDbContext>(options => options.UseInMemoryDatabase(connectionString));

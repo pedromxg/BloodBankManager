@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BloodBankManager.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,22 @@ namespace BloodBankManager.Core.Entities
 {
     public class BloodStock
     {
-        public BloodStock(int id, string bloodType, string rhFactor, int mlAmount)
+        public BloodStock(BloodTypes bloodType, string rhFactor, double mlAmount)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             BloodType = bloodType;
             RhFactor = rhFactor;
             MlAmount = mlAmount;
         }
 
-        public int Id { get; private set; }
-        public string BloodType { get; private set; }
+        public Guid Id { get; private set; }
+        public BloodTypes BloodType { get; private set; }
         public string RhFactor { get; private set; }
-        public int MlAmount { get; private set; }
+        public double MlAmount { get; private set; }
+
+        public void UpdateAmountInStock(double amountDonated)
+        {
+            MlAmount += amountDonated;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace BloodBankManager.Application.Services.Interfaces
     {
         Task<List<DonationViewModel>> GetAllInTheLastThirtyDays();
         Task<DonationDetailsViewModel> GetById(Guid id);
-        Task<(bool, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel);
+        Task<(List<string>, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel);
         Task Remove(Guid id);
     }
 }

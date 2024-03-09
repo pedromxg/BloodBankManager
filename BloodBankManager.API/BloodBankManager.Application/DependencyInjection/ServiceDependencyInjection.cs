@@ -10,6 +10,7 @@ namespace BloodBankManager.Application.DependencyInjection
         {
             services.AddScoped<IDonorService, DonorService>();
             services.AddScoped<IDonationAppService, DonationAppService>();
+            services.AddScoped<IBloodStockAppService, BloodStockAppService>();
         }
     }
 }

@@ -10,33 +10,36 @@ namespace BloodBankManager.Application.Services.Implementations
     {
         private readonly IDonationRepository _donationRepository;
         private readonly IDonorRepository _donorRepository;
-        private readonly IBloodStockRepository _bloodStockRepository;
+        private readonly IBloodStockAppService _bloodStockAppService;
         private readonly IDonationService _donationService;
 
-        public DonationAppService(IDonationRepository donationRepository, IDonorRepository donorRepository, IDonationService donationService)
+        public DonationAppService(IDonationRepository donationRepository, 
+            IDonorRepository donorRepository, 
+            IDonationService donationService, 
+            IBloodStockAppService bloodStockAppService)
         {
             _donationRepository = donationRepository;
             _donorRepository = donorRepository;
             _donationService = donationService;
+            _bloodStockAppService = bloodStockAppService;
         }
 
-        public async Task<(bool, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel)
+        public async Task<(List<string>, CreatedDonationViewModel?)> Create(NewDonationInputModel newDonationInputModel)
         {
             var donor = await _donorRepository.GetById(newDonationInputModel.DonorId);
+
             var registeredDonations = await _donationRepository.GetAll();
-            var bloodStock = await _bloodStockRepository
-            
 
-            _donationService.NewDonation(donor, registeredDonations, );
+            var (newDonation, donationValidations) = await _donationService.NewDonation(donor, registeredDonations, newDonationInputModel.DonationDate, newDonationInputModel.AmountDonated);
 
-            var canDonate = !registeredDonations.Exists(r => r.DonationDate.Equals(newDonationInputModel.DonationDate) && r.DonorId.Equals(newDonationInputModel.DonorId));
+            if (donationValidations.Any())
+                return (donationValidations, new CreatedDonationViewModel());
 
-            if (!canDonate)
-                return (canDonate, null);
+            var createdDonation = await _donationRepository.CreateAsync(newDonation);
 
-            var createdDonation = await _donationRepository.Create(newDonationInputModel.DonationDate, newDonationInputModel.AmountDonated, donor);
+            _bloodStockAppService.UpdateStock(donor, newDonation);
 
-            return (canDonate, new CreatedDonationViewModel(createdDonation.Id));
+            return (donationValidations, new CreatedDonationViewModel(createdDonation.Id));
         }
 
         public async Task<List<DonationViewModel>> GetAllInTheLastThirtyDays()
